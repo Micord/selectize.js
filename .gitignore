@@ -3,3 +3,14 @@
 node_modules
 bower_components
 *.log
+
+#
+# IntelliJ IDEA project files
+#
+.idea*/
+.classes*/
+*.ipr
+*.iml
+*.iws
+*.ids
+atlassian-ide-plugin.xml
