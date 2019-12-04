@@ -21,7 +21,7 @@ Selectize.defaults = {
 	preload: false,
 	allowEmptyOption: false,
 	closeAfterSelect: false,
-	singleBlurOnSelect: true,
+	blurOnSingleSelect: true,
 
 	scrollDuration: 60,
 	loadThrottle: 300,
