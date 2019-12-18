@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg)
+ * selectize.js (v0.12.4-cg.1)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -2234,9 +2234,12 @@
 			var self = this;
 			var trigger = self.isOpen;
 	
-			if (self.settings.mode === 'single' && self.items.length && self.settings.singleBlurOnSelect) {
+			if (self.settings.mode === 'single' && self.items.length) {
 				self.hideInput();
-				self.$control_input.blur(); // close keyboard on iOS
+	
+				if (self.settings.blurOnSingleSelect) {
+					self.$control_input.blur(); // close keyboard on iOS
+				}
 			}
 	
 			self.isOpen = false;
@@ -2652,7 +2655,7 @@
 		preload: false,
 		allowEmptyOption: false,
 		closeAfterSelect: false,
-		singleBlurOnSelect: true,
+		blurOnSingleSelect: true,
 	
 		scrollDuration: 60,
 		loadThrottle: 300,

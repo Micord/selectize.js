@@ -1750,9 +1750,12 @@ $.extend(Selectize.prototype, {
 		var self = this;
 		var trigger = self.isOpen;
 
-		if (self.settings.mode === 'single' && self.items.length && self.settings.blurOnSingleSelect) {
+		if (self.settings.mode === 'single' && self.items.length) {
 			self.hideInput();
-			self.$control_input.blur(); // close keyboard on iOS
+
+			if (self.settings.blurOnSingleSelect) {
+				self.$control_input.blur(); // close keyboard on iOS
+			}
 		}
 
 		self.isOpen = false;
