@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg.1)
+ * selectize.js (v0.12.4-cg.2)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -487,11 +487,6 @@
 		input = $input[0];
 		input.selectize = self;
 	
-		// detect rtl environment
-		var computedStyle = window.getComputedStyle && window.getComputedStyle(input, null);
-		dir = computedStyle ? computedStyle.getPropertyValue('direction') : input.currentStyle && input.currentStyle.direction;
-		dir = dir || $input.parents('[dir]:first').attr('dir') || '';
-	
 		// setup default state
 		$.extend(self, {
 			order            : 0,
@@ -499,8 +494,7 @@
 			$input           : $input,
 			tabIndex         : $input.attr('tabindex') || '',
 			tagType          : input.tagName.toLowerCase() === 'select' ? TAG_SELECT : TAG_INPUT,
-			rtl              : /rtl/i.test(dir),
-	
+			rtl              : false,
 			eventNS          : '.selectize' + (++Selectize.count),
 			highlightedValue : null,
 			isOpen           : false,
@@ -1375,9 +1369,9 @@
 				scroll_bottom = y - height_menu + height_item;
 	
 				if (y + height_item > height_menu + scroll) {
-					self.$dropdown_content.stop().animate({scrollTop: scroll_bottom}, animate ? self.settings.scrollDuration : 0);
+					self.$dropdown_content.stop();
 				} else if (y < scroll) {
-					self.$dropdown_content.stop().animate({scrollTop: scroll_top}, animate ? self.settings.scrollDuration : 0);
+					self.$dropdown_content.stop();
 				}
 	
 			}
