@@ -864,7 +864,7 @@ $.extend(Selectize.prototype, {
 	 */
 	setActiveOption: function($option, scroll, animate) {
 		var height_menu, height_item, y;
-		var scroll_top, scroll_bottom;
+		var scroll_top, scroll_bottom, scroll_center;
 		var self = this;
 
 		if (self.$activeOption) self.$activeOption.removeClass('active');
@@ -883,13 +883,34 @@ $.extend(Selectize.prototype, {
 			y             = self.$activeOption.offset().top - self.$dropdown_content.offset().top + scroll;
 			scroll_top    = y;
 			scroll_bottom = y - height_menu + height_item;
+			scroll_center = (scroll_top + scroll_bottom) / 2;
 
-			if (y + height_item > height_menu + scroll) {
-				self.$dropdown_content.stop();
-			} else if (y < scroll) {
-				self.$dropdown_content.stop();
+			switch (self.settings.scrollGravity) {
+				case SCROLL_GRAVITY_DEFAULT: {
+					if (scroll_bottom > scroll) {
+						self.$dropdown_content.scrollTop(scroll_bottom);
+					}
+					if (scroll_top < scroll) {
+						self.$dropdown_content.scrollTop(scroll_top);
+					}
+					break;
+				}
+				case SCROLL_GRAVITY_TOP: {
+					self.$dropdown_content.scrollTop(scroll_top);
+					break;
+				}
+				case SCROLL_GRAVITY_BOTTOM: {
+					self.$dropdown_content.scrollTop(scroll_bottom);
+					break;
+				}
+				case SCROLL_GRAVITY_CENTER: {
+					self.$dropdown_content.scrollTop(scroll_center);
+					break;
+				}
+				default: {
+					throw new Error('Selectize "scrollGravity" setting must be \'top\', \'center\', \'bottom\' or \'default\'');
+				}
 			}
-
 		}
 	},
 

@@ -23,6 +23,7 @@ Selectize.defaults = {
 	closeAfterSelect: false,
 	blurOnSingleSelect: true,
 
+	scrollGravity: SCROLL_GRAVITY_DEFAULT,
 	scrollDuration: 60,
 	loadThrottle: 300,
 	loadingClass: 'loading',

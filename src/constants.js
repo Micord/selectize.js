@@ -22,3 +22,9 @@ var TAG_INPUT     = 2;
 
 // for now, android support in general is too spotty to support validity
 var SUPPORTS_VALIDITY_API = !/android/i.test(window.navigator.userAgent) && !!document.createElement('input').validity;
+
+var SCROLL_GRAVITY_DEFAULT = 'default'
+var SCROLL_GRAVITY_TOP = 'top';
+var SCROLL_GRAVITY_CENTER = 'center'
+var SCROLL_GRAVITY_BOTTOM = 'bottom'
+
