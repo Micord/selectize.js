@@ -635,7 +635,7 @@
 }));
 
 /**
- * selectize.js (v0.12.4-cg.2)
+ * selectize.js (v0.12.4-cg.4)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -773,6 +773,12 @@
 	
 	// for now, android support in general is too spotty to support validity
 	var SUPPORTS_VALIDITY_API = !/android/i.test(window.navigator.userAgent) && !!document.createElement('input').validity;
+	
+	var SCROLL_GRAVITY_DEFAULT = 'default'
+	var SCROLL_GRAVITY_TOP = 'top';
+	var SCROLL_GRAVITY_CENTER = 'center'
+	var SCROLL_GRAVITY_BOTTOM = 'bottom'
+	
 	
 	
 	var isset = function(object) {
@@ -1984,7 +1990,7 @@
 		 */
 		setActiveOption: function($option, scroll, animate) {
 			var height_menu, height_item, y;
-			var scroll_top, scroll_bottom;
+			var scroll_top, scroll_bottom, scroll_center;
 			var self = this;
 	
 			if (self.$activeOption) self.$activeOption.removeClass('active');
@@ -2003,13 +2009,34 @@
 				y             = self.$activeOption.offset().top - self.$dropdown_content.offset().top + scroll;
 				scroll_top    = y;
 				scroll_bottom = y - height_menu + height_item;
+				scroll_center = (scroll_top + scroll_bottom) / 2;
 	
-				if (y + height_item > height_menu + scroll) {
-					self.$dropdown_content.stop();
-				} else if (y < scroll) {
-					self.$dropdown_content.stop();
+				switch (self.settings.scrollGravity) {
+					case SCROLL_GRAVITY_DEFAULT: {
+						if (scroll_bottom > scroll) {
+							self.$dropdown_content.scrollTop(scroll_bottom);
+						}
+						if (scroll_top < scroll) {
+							self.$dropdown_content.scrollTop(scroll_top);
+						}
+						break;
+					}
+					case SCROLL_GRAVITY_TOP: {
+						self.$dropdown_content.scrollTop(scroll_top);
+						break;
+					}
+					case SCROLL_GRAVITY_BOTTOM: {
+						self.$dropdown_content.scrollTop(scroll_bottom);
+						break;
+					}
+					case SCROLL_GRAVITY_CENTER: {
+						self.$dropdown_content.scrollTop(scroll_center);
+						break;
+					}
+					default: {
+						throw new Error('Selectize "scrollGravity" setting must be \'top\', \'center\', \'bottom\' or \'default\'');
+					}
 				}
-	
 			}
 		},
 	
@@ -3287,6 +3314,7 @@
 		closeAfterSelect: false,
 		blurOnSingleSelect: true,
 	
+		scrollGravity: SCROLL_GRAVITY_DEFAULT,
 		scrollDuration: 60,
 		loadThrottle: 300,
 		loadingClass: 'loading',
@@ -3591,6 +3619,18 @@
 		})();
 	
 	});
+	
+	Selectize.define('input_max_length', function(options) {
+		var self = this;
+		this.setup = (function() {
+			var original = self.setup;
+			return function() {
+				original.apply(this, arguments);
+				this.$control_input.attr('maxlength', this.settings.maxlength);
+			};
+		})();
+	});
+	
 	
 	Selectize.define('optgroup_columns', function(options) {
 		var self = this;
