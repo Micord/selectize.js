@@ -3623,11 +3623,12 @@
 	Selectize.define('infinite_scroll', function(options) {
 	  var self = this
 	      , page = 0;
+	  var option = $.extend({scrollRange: 1}, options);
 	
 	  self.infinitescroll = {
 	    onScroll: function() {
 	      var scrollBottom = self.$dropdown_content[0].scrollHeight - (self.$dropdown_content.scrollTop() + self.$dropdown_content.height())
-	      if(scrollBottom < 100){
+	      if(scrollBottom < option.scrollRange){
 	        var query = JSON.stringify({
 	          search: self.lastValue,
 	          page: page
