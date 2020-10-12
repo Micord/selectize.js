@@ -3017,7 +3017,6 @@
 	      })
 	
 	      original.apply(self, arguments);
-	      // self.onSearchChange(query)
 	    };
 	  })();
 	
@@ -3035,8 +3034,8 @@
 	
 	      self.lastValue = value;
 	      self.onSearchChange(query);
-	      self.refreshOptions();
 	      self.clearOptions();
+	      self.refreshOptions();
 	      self.trigger('type', value);
 	    }
 	  };
