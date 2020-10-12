@@ -31,7 +31,6 @@ Selectize.define('infinite_scroll', function(options) {
       })
 
       original.apply(self, arguments);
-      // self.onSearchChange(query)
     };
   })();
 
@@ -49,8 +48,8 @@ Selectize.define('infinite_scroll', function(options) {
 
       self.lastValue = value;
       self.onSearchChange(query);
-      self.refreshOptions();
       self.clearOptions();
+      self.refreshOptions();
       self.trigger('type', value);
     }
   };
