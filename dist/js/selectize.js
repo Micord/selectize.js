@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg.5)
+ * selectize.js (v0.12.4-cg.6)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
