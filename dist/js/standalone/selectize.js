@@ -3623,7 +3623,7 @@
 	Selectize.define('infinite_scroll', function(options) {
 	  var self = this
 	      , page = 0;
-	  var option = $.extend({scrollRange: 1, multipleChoice: false}, options);
+	  var option = $.extend({scrollRange: 1}, options);
 	
 	  self.infinitescroll = {
 	    onScroll: function() {
@@ -3670,7 +3670,7 @@
 	
 	      self.lastValue = value;
 	      self.onSearchChange(query);
-	      if (!option.multipleChoice) {
+	      if (self.settings.maxItems == 1) {
 	        self.clearOptions();
 	        self.refreshOptions();
 	      }
