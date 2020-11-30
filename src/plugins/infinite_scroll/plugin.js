@@ -50,8 +50,11 @@ Selectize.define('infinite_scroll', function(options) {
       self.onSearchChange(query);
       if (self.settings.maxItems == 1) {
         self.clearOptions();
-        self.refreshOptions();
       }
+      else {
+        self.clearOptionsWithOutSelectedItem();
+      }
+      self.refreshOptions();
       self.trigger('type', value);
     }
   };
