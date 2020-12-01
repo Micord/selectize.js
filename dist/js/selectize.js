@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg.5)
+ * selectize.js (v0.12.4-cg.6)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -1872,6 +1872,23 @@
 			self.clear();
 		},
 	
+		clearOptionsWithOutSelectedItem: function() {
+			var self = this;
+	
+			self.loadedSearches = {};
+			self.userOptions = {};
+			self.renderCache = {};
+			var options = self.options;
+			$.each(self.options, function(key, value) {
+				if(self.items.indexOf(key) == -1) {
+					delete options[key];
+				}
+			});
+			self.options = self.sifter.items = options;
+			self.lastQuery = null;
+			self.trigger('option_clear');
+		},
+	
 		/**
 		 * Returns the jQuery element of the option
 		 * matching the given value.
@@ -3034,7 +3051,12 @@
 	
 	      self.lastValue = value;
 	      self.onSearchChange(query);
-	      self.clearOptions();
+	      if (self.settings.maxItems == 1) {
+	        self.clearOptions();
+	      }
+	      else {
+	        self.clearOptionsWithOutSelectedItem();
+	      }
 	      self.refreshOptions();
 	      self.trigger('type', value);
 	    }
