@@ -1516,6 +1516,7 @@
 				if (!defaultPrevented) {
 					window.setTimeout(function() {
 						self.focus();
+						self.open();
 					}, 0);
 				}
 			}
@@ -1631,7 +1632,10 @@
 					e.preventDefault();
 					return;
 				case KEY_RETURN:
-					if (self.isOpen && self.$activeOption) {
+					if (!self.isOpen && self.hasOptions) {
+						self.open();
+					}
+					else if (self.isOpen && self.$activeOption) {
 						self.onOptionSelect({currentTarget: self.$activeOption});
 						e.preventDefault();
 					}
@@ -3320,7 +3324,7 @@
 		createOnBlur: false,
 		createFilter: null,
 		highlight: true,
-		openOnFocus: true,
+		openOnFocus: false,
 		maxOptions: 1000,
 		maxItems: null,
 		hideSelected: null,

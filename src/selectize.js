@@ -390,6 +390,7 @@ $.extend(Selectize.prototype, {
 			if (!defaultPrevented) {
 				window.setTimeout(function() {
 					self.focus();
+					self.open();
 				}, 0);
 			}
 		}
@@ -505,7 +506,10 @@ $.extend(Selectize.prototype, {
 				e.preventDefault();
 				return;
 			case KEY_RETURN:
-				if (self.isOpen && self.$activeOption) {
+				if (!self.isOpen && self.hasOptions) {
+					self.open();
+				}
+				else if (self.isOpen && self.$activeOption) {
 					self.onOptionSelect({currentTarget: self.$activeOption});
 					e.preventDefault();
 				}
