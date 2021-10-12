@@ -390,7 +390,9 @@ $.extend(Selectize.prototype, {
 			if (!defaultPrevented) {
 				window.setTimeout(function() {
 					self.focus();
-					self.open();
+					if (!self.isOpen) {
+						self.open();
+					}
 				}, 0);
 			}
 		}

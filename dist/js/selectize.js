@@ -880,7 +880,9 @@
 				if (!defaultPrevented) {
 					window.setTimeout(function() {
 						self.focus();
-						self.open();
+						if (!self.isOpen) {
+							self.open();
+						}
 					}, 0);
 				}
 			}
@@ -2688,7 +2690,7 @@
 		createOnBlur: false,
 		createFilter: null,
 		highlight: true,
-		openOnFocus: false,
+		openOnFocus: true,
 		maxOptions: 1000,
 		maxItems: null,
 		hideSelected: null,
