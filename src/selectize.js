@@ -356,6 +356,9 @@ $.extend(Selectize.prototype, {
 		// is ignored unless invoked within a click event)
 		if (!self.isFocused) {
 			self.focus();
+			if (!self.isOpen) {
+				self.open();
+			}
 			e.preventDefault();
 		}
 	},
