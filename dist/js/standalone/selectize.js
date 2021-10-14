@@ -635,7 +635,7 @@
 }));
 
 /**
- * selectize.js (v0.12.4-cg.6)
+ * selectize.js (v0.12.4-cg.7)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -1482,6 +1482,9 @@
 			// is ignored unless invoked within a click event)
 			if (!self.isFocused) {
 				self.focus();
+				if (!self.isOpen) {
+					self.open();
+				}
 				e.preventDefault();
 			}
 		},
@@ -1516,6 +1519,9 @@
 				if (!defaultPrevented) {
 					window.setTimeout(function() {
 						self.focus();
+						if (!self.isOpen) {
+							self.open();
+						}
 					}, 0);
 				}
 			}
@@ -1631,7 +1637,10 @@
 					e.preventDefault();
 					return;
 				case KEY_RETURN:
-					if (self.isOpen && self.$activeOption) {
+					if (!self.isOpen && self.hasOptions) {
+						self.open();
+					}
+					else if (self.isOpen && self.$activeOption) {
 						self.onOptionSelect({currentTarget: self.$activeOption});
 						e.preventDefault();
 					}

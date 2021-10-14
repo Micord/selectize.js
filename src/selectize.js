@@ -356,6 +356,9 @@ $.extend(Selectize.prototype, {
 		// is ignored unless invoked within a click event)
 		if (!self.isFocused) {
 			self.focus();
+			if (!self.isOpen) {
+				self.open();
+			}
 			e.preventDefault();
 		}
 	},
@@ -390,6 +393,9 @@ $.extend(Selectize.prototype, {
 			if (!defaultPrevented) {
 				window.setTimeout(function() {
 					self.focus();
+					if (!self.isOpen) {
+						self.open();
+					}
 				}, 0);
 			}
 		}
@@ -505,7 +511,10 @@ $.extend(Selectize.prototype, {
 				e.preventDefault();
 				return;
 			case KEY_RETURN:
-				if (self.isOpen && self.$activeOption) {
+				if (!self.isOpen && self.hasOptions) {
+					self.open();
+				}
+				else if (self.isOpen && self.$activeOption) {
 					self.onOptionSelect({currentTarget: self.$activeOption});
 					e.preventDefault();
 				}
