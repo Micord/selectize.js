@@ -1316,7 +1316,7 @@
 			});
 	
 			$control_input.on({
-				mousedown : function(e) { e.stopPropagation(); },
+				mousedown : function() { return self.onMouseDown.apply(self, arguments); },
 				keydown   : function() { return self.onKeyDown.apply(self, arguments); },
 				keyup     : function() { return self.onKeyUp.apply(self, arguments); },
 				keypress  : function() { return self.onKeyPress.apply(self, arguments); },
@@ -1482,7 +1482,7 @@
 			// is ignored unless invoked within a click event)
 			if (!self.isFocused) {
 				self.focus();
-				if (!self.isOpen) {
+				if (!self.isOpen && self.hasOptions) {
 					self.open();
 				}
 				e.preventDefault();
@@ -1508,7 +1508,14 @@
 				if (e.target !== self.$control_input[0]) {
 					if (self.settings.mode === 'single') {
 						// toggle dropdown
-						self.isOpen ? self.close() : self.open();
+						if (!self.isOpen) {
+							if (self.hasOptions) {
+								self.open();
+							}
+						}
+						else {
+							self.close();
+						}
 					} else if (!defaultPrevented) {
 						self.setActiveItem(null);
 					}
@@ -1519,7 +1526,7 @@
 				if (!defaultPrevented) {
 					window.setTimeout(function() {
 						self.focus();
-						if (!self.isOpen) {
+						if (!self.isOpen && self.hasOptions) {
 							self.open();
 						}
 					}, 0);
