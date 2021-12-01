@@ -1824,10 +1824,20 @@ $.extend(Selectize.prototype, {
 		offset.top += $control.outerHeight(true);
 
 		this.$dropdown.css({
-			width : $control.outerWidth(),
-			top   : offset.top,
-			left  : offset.left
+			width  : $control.outerWidth(),
+			top    : offset.top,
+			left   : offset.left,
+			bottom : ''
 		});
+
+		if (this.settings.dropdownDirection === 'auto') {
+			if ($control.offset().top > (window.innerHeight * 0.7)) {
+				this.$dropdown.css({
+					bottom : 'calc(100% + 2px)',
+					top	   : ''
+				});
+			}
+		}
 	},
 
 	/**
