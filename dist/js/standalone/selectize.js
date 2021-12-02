@@ -2956,13 +2956,11 @@
 				bottom : ''
 			});
 	
-			if (this.settings.dropdownDirection === 'auto') {
-				if ($control.offset().top > (window.innerHeight * 0.7)) {
-					this.$dropdown.css({
-						bottom : 'calc(100% + 2px)',
-						top	   : ''
-					});
-				}
+			if (this.settings.dropdownDirectionAuto && ($control.offset().top > (window.innerHeight * 0.7))) {
+				this.$dropdown.css({
+					bottom : 'calc(100% + 2px)',
+					top	   : ''
+				});
 			}
 		},
 	
@@ -3381,7 +3379,7 @@
 		dropdownContentClass: 'selectize-dropdown-content',
 	
 		dropdownParent: null,
-		dropdownDirection: null,
+		dropdownDirectionAuto: false,
 	
 		copyClassesToDropdown: true,
 	
