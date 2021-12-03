@@ -1825,16 +1825,35 @@ $.extend(Selectize.prototype, {
 
 		this.$dropdown.css({
 			width  : $control.outerWidth(),
-			top    : offset.top,
-			left   : offset.left,
-			bottom : ''
+			left   : offset.left
 		});
 
-		if (this.settings.dropdownDirectionAuto && ($control.offset().top > (window.innerHeight * 0.7))) {
-			this.$dropdown.css({
-				bottom : 'calc(100% + 2px)',
-				top	   : ''
-			});
+		switch (this.settings.dropdownDirection) {
+			case DIRECTION_UP:
+				this.$dropdown.css({
+					bottom : 'calc(100% + 2px)',
+				});
+				break;
+			case DIRECTION_DOWN:
+				this.$dropdown.css({
+					top : offset.top
+				});
+				break;
+			case DIRECTION_AUTO:
+			default:
+				if ($control.offset().top > (window.innerHeight * 0.7)) {
+					this.$dropdown.css({
+						bottom : 'calc(100% + 2px)',
+						top    : ''
+					});
+				}
+				else {
+					this.$dropdown.css({
+						bottom : '',
+						top    : offset.top
+					});
+				}
+				break;
 		}
 	},
 

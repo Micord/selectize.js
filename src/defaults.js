@@ -47,7 +47,7 @@ Selectize.defaults = {
 	dropdownContentClass: 'selectize-dropdown-content',
 
 	dropdownParent: null,
-	dropdownDirectionAuto: false,
+	dropdownDirection: DIRECTION_AUTO,
 
 	copyClassesToDropdown: true,
 
