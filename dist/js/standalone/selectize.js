@@ -774,10 +774,15 @@
 	// for now, android support in general is too spotty to support validity
 	var SUPPORTS_VALIDITY_API = !/android/i.test(window.navigator.userAgent) && !!document.createElement('input').validity;
 	
-	var SCROLL_GRAVITY_DEFAULT = 'default'
+	var SCROLL_GRAVITY_DEFAULT = 'default';
 	var SCROLL_GRAVITY_TOP = 'top';
-	var SCROLL_GRAVITY_CENTER = 'center'
-	var SCROLL_GRAVITY_BOTTOM = 'bottom'
+	var SCROLL_GRAVITY_CENTER = 'center';
+	var SCROLL_GRAVITY_BOTTOM = 'bottom';
+	
+	var DIRECTION_AUTO = 'auto';
+	var DIRECTION_DOWN = 'down';
+	var DIRECTION_UP = 'up';
+	
 	
 	
 	
@@ -2951,16 +2956,35 @@
 	
 			this.$dropdown.css({
 				width  : $control.outerWidth(),
-				top    : offset.top,
-				left   : offset.left,
-				bottom : ''
+				left   : offset.left
 			});
 	
-			if (this.settings.dropdownDirectionAuto && ($control.offset().top > (window.innerHeight * 0.7))) {
-				this.$dropdown.css({
-					bottom : 'calc(100% + 2px)',
-					top	   : ''
-				});
+			switch (this.settings.dropdownDirection) {
+				case DIRECTION_UP:
+					this.$dropdown.css({
+						bottom : 'calc(100% + 2px)',
+					});
+					break;
+				case DIRECTION_DOWN:
+					this.$dropdown.css({
+						top : offset.top
+					});
+					break;
+				case DIRECTION_AUTO:
+				default:
+					if ($control.offset().top > (window.innerHeight * 0.7)) {
+						this.$dropdown.css({
+							bottom : 'calc(100% + 2px)',
+							top    : ''
+						});
+					}
+					else {
+						this.$dropdown.css({
+							bottom : '',
+							top    : offset.top
+						});
+					}
+					break;
 			}
 		},
 	
@@ -3379,7 +3403,7 @@
 		dropdownContentClass: 'selectize-dropdown-content',
 	
 		dropdownParent: null,
-		dropdownDirectionAuto: false,
+		dropdownDirection: DIRECTION_AUTO,
 	
 		copyClassesToDropdown: true,
 	
