@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg.7)
+ * selectize.js (v0.12.4-cg.8)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -138,10 +138,15 @@
 	// for now, android support in general is too spotty to support validity
 	var SUPPORTS_VALIDITY_API = !/android/i.test(window.navigator.userAgent) && !!document.createElement('input').validity;
 	
-	var SCROLL_GRAVITY_DEFAULT = 'default'
+	var SCROLL_GRAVITY_DEFAULT = 'default';
 	var SCROLL_GRAVITY_TOP = 'top';
-	var SCROLL_GRAVITY_CENTER = 'center'
-	var SCROLL_GRAVITY_BOTTOM = 'bottom'
+	var SCROLL_GRAVITY_CENTER = 'center';
+	var SCROLL_GRAVITY_BOTTOM = 'bottom';
+	
+	var DIRECTION_AUTO = 'auto';
+	var DIRECTION_DOWN = 'down';
+	var DIRECTION_UP = 'up';
+	
 	
 	
 	
@@ -2314,10 +2319,37 @@
 			offset.top += $control.outerHeight(true);
 	
 			this.$dropdown.css({
-				width : $control.outerWidth(),
-				top   : offset.top,
-				left  : offset.left
+				width  : $control.outerWidth(),
+				left   : offset.left
 			});
+	
+			switch (this.settings.dropdownDirection) {
+				case DIRECTION_UP:
+					this.$dropdown.css({
+						bottom : 'calc(100% + 2px)',
+					});
+					break;
+				case DIRECTION_DOWN:
+					this.$dropdown.css({
+						top : offset.top
+					});
+					break;
+				case DIRECTION_AUTO:
+				default:
+					if ($control.offset().top > (window.innerHeight * 0.7)) {
+						this.$dropdown.css({
+							bottom : 'calc(100% + 2px)',
+							top    : ''
+						});
+					}
+					else {
+						this.$dropdown.css({
+							bottom : '',
+							top    : offset.top
+						});
+					}
+					break;
+			}
 		},
 	
 		/**
@@ -2735,6 +2767,7 @@
 		dropdownContentClass: 'selectize-dropdown-content',
 	
 		dropdownParent: null,
+		dropdownDirection: DIRECTION_AUTO,
 	
 		copyClassesToDropdown: true,
 	

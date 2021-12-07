@@ -1824,10 +1824,37 @@ $.extend(Selectize.prototype, {
 		offset.top += $control.outerHeight(true);
 
 		this.$dropdown.css({
-			width : $control.outerWidth(),
-			top   : offset.top,
-			left  : offset.left
+			width  : $control.outerWidth(),
+			left   : offset.left
 		});
+
+		switch (this.settings.dropdownDirection) {
+			case DIRECTION_UP:
+				this.$dropdown.css({
+					bottom : 'calc(100% + 2px)',
+				});
+				break;
+			case DIRECTION_DOWN:
+				this.$dropdown.css({
+					top : offset.top
+				});
+				break;
+			case DIRECTION_AUTO:
+			default:
+				if ($control.offset().top > (window.innerHeight * 0.7)) {
+					this.$dropdown.css({
+						bottom : 'calc(100% + 2px)',
+						top    : ''
+					});
+				}
+				else {
+					this.$dropdown.css({
+						bottom : '',
+						top    : offset.top
+					});
+				}
+				break;
+		}
 	},
 
 	/**
