@@ -1847,7 +1847,7 @@ $.extend(Selectize.prototype, {
 		switch (this.settings.dropdownDirection) {
 			case DIRECTION_UP:
 				this.$dropdown.css({
-					transform	: 'translate(0px, -' + this.$dropdown[0].offsetHeight + 'px)',
+					transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)',
 					top			: offsetTop
 				});
 				break;
