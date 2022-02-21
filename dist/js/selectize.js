@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg.8)
+ * selectize.js (v0.12.4-cg.9)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -1647,6 +1647,10 @@
 			}
 	
 			$dropdown_content.html(html);
+			var $control = this.$control;
+			var offset = this.settings.dropdownParent === 'body' ? $control.offset() : $control.position();
+			var dropdownTop = offset.top + $control.outerHeight(true);
+			this.setDropdownPositionRules(offset.top, dropdownTop, $control[0].getBoundingClientRect().bottom);
 	
 			// highlight matching terms inline
 			if (self.settings.highlight && results.query.length && results.tokens.length) {
@@ -2316,36 +2320,55 @@
 		positionDropdown: function() {
 			var $control = this.$control;
 			var offset = this.settings.dropdownParent === 'body' ? $control.offset() : $control.position();
-			offset.top += $control.outerHeight(true);
+			var dropdownTop = offset.top + $control.outerHeight(true);
 	
 			this.$dropdown.css({
 				width  : $control.outerWidth(),
 				left   : offset.left
 			});
 	
+			this.setDropdownPositionRules(offset.top, dropdownTop, $control[0].getBoundingClientRect().bottom);
+		},
+	
+		/**
+		 * Sets css rules for dropdown (depending
+		 * on its position).
+		 *
+		 * @param {int} offsetTop
+		 * @param {int} dropdownTop
+		 * @param {int} controlBottom
+		 */
+		setDropdownPositionRules: function(offsetTop, dropdownTop, controlBottom) {
 			switch (this.settings.dropdownDirection) {
 				case DIRECTION_UP:
 					this.$dropdown.css({
-						bottom : 'calc(100% + 2px)',
+						transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)',
+						top			: offsetTop
 					});
 					break;
 				case DIRECTION_DOWN:
 					this.$dropdown.css({
-						top : offset.top
+						top: dropdownTop
 					});
 					break;
 				case DIRECTION_AUTO:
 				default:
-					if ($control.offset().top > (window.innerHeight * 0.7)) {
+					var overflowingParent = this.$dropdown[0].parentElement;
+					var ruleValues = 'auto|clip|hidden|overlay';
+					while (overflowingParent && !window.getComputedStyle(overflowingParent).overflowY.match(ruleValues)) {
+						overflowingParent = overflowingParent.parentElement;
+					}
+	
+					if ((overflowingParent.getBoundingClientRect().bottom - controlBottom) < this.$dropdown[0].scrollHeight) {
 						this.$dropdown.css({
-							bottom : 'calc(100% + 2px)',
-							top    : ''
+							top			: offsetTop,
+							transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)'
 						});
 					}
 					else {
 						this.$dropdown.css({
-							bottom : '',
-							top    : offset.top
+							top			: dropdownTop,
+							transform	: 'translate(0px, 0px)'
 						});
 					}
 					break;
