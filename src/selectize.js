@@ -1846,15 +1846,10 @@ $.extend(Selectize.prototype, {
 	setDropdownPositionRules: function(offsetTop, dropdownTop, controlBottom) {
 		switch (this.settings.dropdownDirection) {
 			case DIRECTION_UP:
-				this.$dropdown.css({
-					transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)',
-					top			: offsetTop
-				});
+				this.setDropDownRuleUp(offsetTop);
 				break;
 			case DIRECTION_DOWN:
-				this.$dropdown.css({
-					top: dropdownTop
-				});
+				this.setDropDownRuleDown(dropdownTop);
 				break;
 			case DIRECTION_AUTO:
 			default:
@@ -1864,20 +1859,31 @@ $.extend(Selectize.prototype, {
 					overflowingParent = overflowingParent.parentElement;
 				}
 
+				if (!overflowingParent) {
+					this.setDropDownRuleDown(dropdownTop);
+				}
+
 				if ((overflowingParent.getBoundingClientRect().bottom - controlBottom) < this.$dropdown[0].scrollHeight) {
-					this.$dropdown.css({
-						top			: offsetTop,
-						transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)'
-					});
+					this.setDropDownRuleUp(offsetTop);
 				}
 				else {
-					this.$dropdown.css({
-						top			: dropdownTop,
-						transform	: 'translate(0px, 0px)'
-					});
+					this.setDropDownRuleDown(dropdownTop);
 				}
 				break;
 		}
+	},
+
+	setDropDownRuleDown: function(dropdownTop) {
+		this.$dropdown.css({
+			top: dropdownTop
+		});
+	},
+
+	setDropDownRuleUp: function(offsetTop) {
+		this.$dropdown.css({
+			transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)',
+			top			: offsetTop
+		});
 	},
 
 	/**
