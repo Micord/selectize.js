@@ -1861,6 +1861,7 @@ $.extend(Selectize.prototype, {
 
 				if (!overflowingParent) {
 					this.setDropDownRuleDown(dropdownTop);
+					break;
 				}
 
 				if ((overflowingParent.getBoundingClientRect().bottom - controlBottom) < this.$dropdown[0].scrollHeight) {
