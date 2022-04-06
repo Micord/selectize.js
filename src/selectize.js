@@ -1875,7 +1875,8 @@ $.extend(Selectize.prototype, {
 
 	setDropDownRuleDown: function(dropdownTop) {
 		this.$dropdown.css({
-			top: dropdownTop
+			transform	: 'translate(0px, 0px)',
+			top         : dropdownTop
 		});
 	},
 
