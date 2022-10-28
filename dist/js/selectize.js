@@ -1,5 +1,5 @@
 /**
- * selectize.js (v0.12.4-cg.9)
+ * selectize.js (v0.12.4-cg.10)
  * Copyright (c) 2013–2015 Brian Reavis & contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
@@ -2341,15 +2341,10 @@
 		setDropdownPositionRules: function(offsetTop, dropdownTop, controlBottom) {
 			switch (this.settings.dropdownDirection) {
 				case DIRECTION_UP:
-					this.$dropdown.css({
-						transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)',
-						top			: offsetTop
-					});
+					this.setDropDownRuleUp(offsetTop);
 					break;
 				case DIRECTION_DOWN:
-					this.$dropdown.css({
-						top: dropdownTop
-					});
+					this.setDropDownRuleDown(dropdownTop);
 					break;
 				case DIRECTION_AUTO:
 				default:
@@ -2359,20 +2354,33 @@
 						overflowingParent = overflowingParent.parentElement;
 					}
 	
+					if (!overflowingParent) {
+						this.setDropDownRuleDown(dropdownTop);
+						break;
+					}
+	
 					if ((overflowingParent.getBoundingClientRect().bottom - controlBottom) < this.$dropdown[0].scrollHeight) {
-						this.$dropdown.css({
-							top			: offsetTop,
-							transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)'
-						});
+						this.setDropDownRuleUp(offsetTop);
 					}
 					else {
-						this.$dropdown.css({
-							top			: dropdownTop,
-							transform	: 'translate(0px, 0px)'
-						});
+						this.setDropDownRuleDown(dropdownTop);
 					}
 					break;
 			}
+		},
+	
+		setDropDownRuleDown: function(dropdownTop) {
+			this.$dropdown.css({
+				transform	: 'translate(0px, 0px)',
+				top         : dropdownTop
+			});
+		},
+	
+		setDropDownRuleUp: function(offsetTop) {
+			this.$dropdown.css({
+				transform	: 'translate(0px, -' + this.$dropdown[0].scrollHeight + 'px)',
+				top			: offsetTop
+			});
 		},
 	
 		/**
