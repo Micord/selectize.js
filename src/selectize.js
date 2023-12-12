@@ -192,7 +192,7 @@ $.extend(Selectize.prototype, {
 		$control_input.on({
 			mousedown : function() { return self.onMouseDown.apply(self, arguments); },
 			keydown   : function() { return self.onKeyDown.apply(self, arguments); },
-			keyup     : function() { return self.onKeyUp.apply(self, arguments); },
+			input     : function() { return self.onInput.apply(self, arguments); },
 			keypress  : function() { return self.onKeyPress.apply(self, arguments); },
 			resize    : function() { self.positionDropdown.apply(self, []); },
 			blur      : function() { return self.onBlur.apply(self, arguments); },
@@ -206,7 +206,7 @@ $.extend(Selectize.prototype, {
 			self.isShiftDown = e.shiftKey;
 		});
 
-		$document.on('keyup' + eventNS, function(e) {
+		$document.on('input' + eventNS, function(e) {
 			if (e.keyCode === KEY_CTRL) self.isCtrlDown = false;
 			if (e.keyCode === KEY_SHIFT) self.isShiftDown = false;
 			if (e.keyCode === KEY_CMD) self.isCmdDown = false;
@@ -559,12 +559,12 @@ $.extend(Selectize.prototype, {
 	},
 
 	/**
-	 * Triggered on <input> keyup.
+	 * Triggered on <input> input.
 	 *
 	 * @param {object} e
 	 * @returns {boolean}
 	 */
-	onKeyUp: function(e) {
+	onInput: function(e) {
 		var self = this;
 
 		if (self.isLocked) return e && e.preventDefault();
