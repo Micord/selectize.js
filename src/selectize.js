@@ -1518,9 +1518,9 @@ $.extend(Selectize.prototype, {
 			if (!self.options.hasOwnProperty(value)) return;
 			if (inputMode === 'single') self.clear(silent);
 			if (inputMode === 'multi' && self.isFull()) return;
-			var selectedLabel = self.options[value].selectedLabel;
-			if (selectedLabel) {
-				self.options[value].label = selectedLabel;
+			var displayLabel = self.options[value].displayLabel;
+			if (displayLabel) {
+				self.options[value].dropDownLabel = displayLabel;
 			}
 			$item = $(self.render('item', self.options[value]));
 			wasFull = self.isFull();
