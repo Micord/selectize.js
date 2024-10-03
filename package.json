@@ -12,7 +12,7 @@
   ],
   "main": "dist/js/selectize.js",
   "description": "Selectize is a jQuery-based custom <select> UI control. Useful for tagging, contact lists, country selectors, etc.",
-  "version": "0.12.4-cg.10",
+  "version": "0.12.4-cg.11",
   "author": "Brian Reavis <brian@thirdroute.com>",
   "license": "Apache-2.0",
   "repository": {
@@ -21,22 +21,22 @@
   },
   "dependencies": {
     "microplugin": "0.0.3",
-    "sifter": "^0.5.1"
+    "sifter": "^0.5.1",
+    "jquery": ">=1.7.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "grunt": "0.4.x",
-    "grunt-bower-task": "^0.4.0",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-clean": "0.5.x",
-    "grunt-contrib-concat": "0.3.x",
-    "grunt-contrib-connect": "1.x",
-    "grunt-contrib-copy": "0.4.x",
-    "grunt-contrib-less": "~0.9.0",
-    "grunt-contrib-uglify": "~1.0.1",
-    "grunt-contrib-watch": "1.x",
-    "grunt-recess": "0.5.x",
-    "grunt-replace": "0.4.x",
+    "grunt": "1.6.1",
+    "grunt-cli": "1.5.0",
+    "grunt-contrib-clean": "2.0.1",
+    "grunt-contrib-concat": "2.1.0",
+    "grunt-contrib-connect": "5.0.0",
+    "grunt-contrib-copy": "1.0.0",
+    "grunt-contrib-less": "3.0.0",
+    "grunt-contrib-uglify": "5.2.2",
+    "grunt-contrib-watch": "1.1.0",
+    "grunt-recess": "1.0.1",
+    "grunt-replace": "2.0.2",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.1.7",
@@ -48,7 +48,12 @@
     "karma-phantomjs-launcher": "^1.0.1",
     "karma-safari-launcher": "^0.1.1",
     "karma-sauce-launcher": "^0.2.10",
-    "mocha": "^3.1.0"
+    "mocha": "^3.1.0",
+    "bootstrap3": "3.3.5",
+    "less": "4.2.0"
+  },
+  "overrides": {
+    "minimist": "1.2.8"
   },
   "scripts": {
     "test": "./node_modules/karma/bin/karma start"
