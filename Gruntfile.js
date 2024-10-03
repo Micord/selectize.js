@@ -200,8 +200,7 @@ module.exports = function(grunt) {
 					'ascii-only': true
 				},
 				files: {
-					'dist/js/selectize.min.js': ['dist/js/selectize.js'],
-					'dist/js/standalone/selectize.min.js': ['dist/js/standalone/selectize.js']
+					'dist/js/selectize.min.js': ['dist/js/selectize.js']
 				}
 			}
 		},

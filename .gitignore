@@ -14,4 +14,3 @@ bower_components
 *.iws
 *.ids
 atlassian-ide-plugin.xml
-package-lock.json
