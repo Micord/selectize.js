@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 		modules.push(source);
 
 		// write output
-		path = 'dist/js/standalone/selectize.js';
+		path = 'dist/js/selectize.js';
 		grunt.file.write(path, modules.join('\n\n'));
 		grunt.log.writeln('Built "' + path + '".');
 	});
@@ -79,8 +79,8 @@ module.exports = function(grunt) {
 	];
 
 	var files_js_dependencies = [
-		'node_modules/sifter/sifter.js',
-		'node_modules/microplugin/src/microplugin.js',
+		'old_libs/sifter/sifter.js',
+		'old_libs/microplugin/microplugin.js',
 	];
 
 	var less_imports = [];
