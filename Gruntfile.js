@@ -22,7 +22,6 @@ module.exports = function(grunt) {
 		'concat:js',
 		'less:uncompressed',
 		'replace',
-		'build_standalone',
 		'uglify',
 		'clean:post',
 	]);
@@ -43,28 +42,6 @@ module.exports = function(grunt) {
 			'compile'
 	])
 
-	grunt.registerTask('build_standalone', '', function() {
-		var files, i, n, source, name, path, modules = [];
-
-		// amd definitions must be changed to be not anonymous
-		// @see https://github.com/brianreavis/selectize.js/issues/89
-		files = [];
-		for (i = 0, n = files_js_dependencies.length; i < n; i++) {
-			path = files_js_dependencies[i];
-			name = path.match(/([^\/]+?).js$/)[1];
-			source = grunt.file.read(path).replace('define(factory);', 'define(\'' + name + '\', factory);');
-			modules.push(source);
-		}
-
-		path = 'dist/js/selectize.js';
-		source = grunt.file.read(path).replace(/define\((.*?)factory\);/, 'define(\'selectize\', $1factory);');
-		modules.push(source);
-
-		// write output
-		path = 'dist/js/selectize.js';
-		grunt.file.write(path, modules.join('\n\n'));
-		grunt.log.writeln('Built "' + path + '".');
-	});
 
 	var files_js = [
 		'src/contrib/*.js',
@@ -76,11 +53,6 @@ module.exports = function(grunt) {
 		'src/selectize.js',
 		'src/defaults.js',
 		'src/selectize.jquery.js',
-	];
-
-	var files_js_dependencies = [
-		'old_libs/sifter/sifter.js',
-		'old_libs/microplugin/microplugin.js',
 	];
 
 	var less_imports = [];
@@ -210,7 +182,6 @@ module.exports = function(grunt) {
 			],
 			tasks: [
 				'concat:js',
-				'build_standalone'
 			]
 		}
 	});
