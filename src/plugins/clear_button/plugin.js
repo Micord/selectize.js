@@ -54,6 +54,10 @@ Selectize.define("clear_button", function (options) {
         }
       });
 
+      self.on("clear", function () {
+        self.$wrapper.find("." + options.className).css("display", "none");
+      });
+
       self.$wrapper.on("click", "." + options.className, function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -62,7 +66,6 @@ Selectize.define("clear_button", function (options) {
         if (self.isLocked) return;
 
         self.clear();
-        self.$wrapper.find("." + options.className).css("display", "none");
       });
     };
   })();
