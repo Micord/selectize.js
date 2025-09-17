@@ -36,36 +36,26 @@ Selectize.define("clear_button", function (options) {
     var original = self.setup;
     return function () {
       original.apply(self, arguments);
+
       self.$button_clear = $(options.html(options));
-
       if (self.settings.mode === "single") self.$wrapper.addClass("single");
-
       self.$wrapper.append(self.$button_clear);
 
-      if (self.getValue() === "" || self.getValue().length === 0) {
-        self.$wrapper.find("." + options.className).css("display", "none");
+      function toggleClearButton() {
+        if (!self.getValue() || self.getValue().length === 0) {
+          self.$button_clear.css("display", "none");
+        } else {
+          self.$button_clear.css("display", "");
+        }
       }
 
-      self.on("change", function () {
-        if (self.getValue() === "" || self.getValue().length === 0) {
-          self.$wrapper.find("." + options.className).css("display", "none");
-        } else {
-          self.$wrapper.find("." + options.className).css("display", "");
-        }
-      });
+      toggleClearButton();
+      ["clear", "item_add", "item_remove", "change"].forEach(event => self.on(event, toggleClearButton));
 
-      self.on("clear", function () {
-        self.$wrapper.find("." + options.className).css("display", "none");
-      });
-
-      self.$wrapper.on("click", "." + options.className, function (e) {
+      self.$button_clear.on("click", function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
-        e.stopPropagation();
-
-        if (self.isLocked) return;
-
-        self.clear();
+        if (!self.isLocked) self.clear();
       });
     };
   })();
